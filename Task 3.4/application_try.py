@@ -36,7 +36,7 @@ if __name__ == '__main__':
 
     negation_words_dict_ = detect_negation(b1sentences)
 
-    plt.bar(list(negation_words_dict_.keys()), negation_words_dict_.values(), color='grey')
+    plt.bar(list(negation_words_dict_.keys()), negation_words_dict_.values(), color='#75acc1')
     plt.show()
 
 
