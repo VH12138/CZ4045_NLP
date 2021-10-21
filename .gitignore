@@ -3,3 +3,5 @@
 /Task3.2/result
 .DS_Store
 .idea/
+/Task3.2/extract_NJ_pairs/processedData/
+Task3.2/extract_NJ_pairs/__pycache__/
