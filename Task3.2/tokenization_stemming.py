@@ -1,76 +1,82 @@
 import nltk
 import random
 from nltk.stem.porter import PorterStemmer
-from nltk.tokenize import sent_tokenize, word_tokenize,RegexpTokenizer
-from nltk.corpus import stopwords 
+from nltk.tokenize import RegexpTokenizer
+from nltk.corpus import stopwords
 import pandas as pd
 import matplotlib.pyplot as plt
+import os
 
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('averaged_perceptron_tagger')
 
 stop_words = set(stopwords.words('english'))
-json_path = 'reviewSelected100.json'
+json_path = '../Dataset/reviewSelected100.json'
+
 
 def extractData(filename):
     data = pd.read_json(json_path, lines=True, encoding='ISO-8859-1')
     biz = data['business_id'].unique()
-    b1_data = random.choice(biz)
+    biz_choice = random.choice(biz)
+    b1_data = data.loc[data['business_id'] == biz_choice]
     b1review = b1_data['text']
-    b1review.to_csv(str(filename) + '.txt')
+    b1review.to_csv('result/'+str(filename) + '.txt')
+
 
 def tokenize_library(inputtxt_files):
-    #Create a token library
+    # Create a token library
     token_library = {}
-    #Set tokenizer to only regex words
+    # Set tokenizer to only regex words
     tokenizer = RegexpTokenizer(r'\w+')
-    #Loop for each file
+    # Loop for each file
     for i in inputtxt_files:
-        #Tokenized contains the words converted to lower letters
+        # Tokenized contains the words converted to lower letters
         tokenized = tokenizer.tokenize(i.lower())
-        #Loop for each token
+        # Loop for each token
         for j in tokenized:
             if j.isdigit():
-                #ignore number tokens
+                # ignore number tokens
                 pass
             else:
-                #If token has not been added to library before and not stop words
+                # If token has not been added to library before and not stop words
                 if j.lower() not in token_library and j.lower() not in stop_words:
-                    #Add token to dictionary
+                    # Add token to dictionary
                     token_library[j.lower()] = 1
-                #if token has been added before and not stop words
+                # if token has been added before and not stop words
                 elif j.lower() not in stop_words:
-                    #Add 1 more occurance to dictionary
+                    # Add 1 more occurance to dictionary
                     token_library[j.lower()] += 1
-    #sort the token library by frequency
-    sorted_dict = dict( sorted(token_library.items(),
-                            key=lambda item: item[1],
-                            reverse=True))
+    # sort the token library by frequency
+    sorted_dict = dict(sorted(token_library.items(),
+                              key=lambda item: item[1],
+                              reverse=True))
     return sorted_dict
+
 
 def stemming(lib):
     porter_stemmer = PorterStemmer()
-    #Initialize new dict
+    # Initialize new dict
     stemm_dict = {}
-    #Loop for each item in dictionary
+    # Loop for each item in dictionary
     for word in lib:
         stemmed_w = porter_stemmer.stem(word)
-        
+
         if stemmed_w not in stemm_dict:
             stemm_dict[stemmed_w] = 1
         else:
             stemm_dict[stemmed_w] += 1
 
-    stemm_dict = dict( sorted(stemm_dict.items(),
-                            key=lambda item: item[1],
-                            reverse=True))
+    stemm_dict = dict(sorted(stemm_dict.items(),
+                             key=lambda item: item[1],
+                             reverse=True))
     return stemm_dict
 
+
 def getLengthDict(business_dict):
-    #create a counter dictionary
+    # create a counter dictionary
     counter = {}
-    #get length of each word's occurance times
+    # get length of each word's occurance times
     for word in business_dict:
         if len(word) not in counter:
             counter[len(word)] = 1
@@ -78,18 +84,21 @@ def getLengthDict(business_dict):
             counter[len(word)] += 1
     return counter
 
+
 def wordFrequency(before_lib, after_lib, png_name):
-    plt.figure(figsize=(20,10))
+    plt.figure(figsize=(20, 10))
     D = getLengthDict(before_lib)
 
-    plt.bar(range(len(D)), list(D.values()), align='center', alpha=0.5,label="Before Stemming", edgecolor='black', hatch="/")
+    plt.bar(range(len(D)), list(D.values()), align='center', alpha=0.5, label="Before Stemming", edgecolor='black',
+            hatch="/")
     plt.xticks(range(len(D)), list(D.keys()))
     plt.xticks(rotation=90)
 
     ## after stemming
     D = getLengthDict(after_lib)
 
-    plt.bar(range(len(D)), list(D.values()), align='center', alpha=0.5, label="After Stemming", edgecolor='black', hatch=".")
+    plt.bar(range(len(D)), list(D.values()), align='center', alpha=0.5, label="After Stemming", edgecolor='black',
+            hatch=".")
     plt.xticks(range(len(D)), list(D.keys()))
     plt.xticks(rotation=90)
     plt.ylabel('count')
@@ -97,11 +106,11 @@ def wordFrequency(before_lib, after_lib, png_name):
     plt.title('Length distribution of tokens')
     plt.legend(prop={'size': 40})
 
-    plt.show()
-    plt.savefig(str(png_name)+'.png')
+    plt.savefig('result/'+ str(png_name) + '.png')
+    # plt.show()
 
 def reviewData(filename, png_name):
-    b1review = filename + '.txt'
+    b1review = 'result/'+filename + '.txt'
     file1 = open(b1review, 'r')
     files = list()
     files.append(file1.read())
@@ -122,18 +131,18 @@ def reviewData(filename, png_name):
     print()
     print('Top-10 most frequent words after stemming:\n')
     print(list(b1stemm_dict)[:10])
-    #Comparision
-    print("Total unique tokens before stemming: "+str(len(b1tokens_lib)))
-    print("Total unique tokens after stemming: "+str(len(b1stemm_dict)))
+    # Comparision
+    print("Total unique tokens before stemming: " + str(len(b1tokens_lib)))
+    print("Total unique tokens after stemming: " + str(len(b1stemm_dict)))
     wordFrequency(b1tokens_lib, b1stemm_dict, png_name)
 
 
 if __name__ == '__main__':
+    if not os.path.exists('result'):
+        os.makedirs('result')
     extractData('b1review')
     extractData('b2review')
     print('Word frequency distributions for b1:')
     reviewData('b1review', 'b1_word_frequency')
     print('Word frequency distributions for b2:')
     reviewData('b2review', 'b2_word_frequency')
-    
-
