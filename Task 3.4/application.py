@@ -36,8 +36,9 @@ def findNegation(sentences):
         df = pd.DataFrame(rows, columns =['Token', 'Negation Expression'])
         print(df,'\n')
 
+
 if __name__ == '__main__':
-    b1review = 'result/b1review.txt'
+    b1review = '../Task3.2/result/b1review.txt'
     file1 = open(b1review, 'r')
     files = list()
     files.append(file1.read())
