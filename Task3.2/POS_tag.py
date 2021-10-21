@@ -7,6 +7,7 @@ import pandas as pd
 import spacy
 import spacy.cli
 import os
+
 # Sentence Separation
 def sentence_sep(txt_files):
     separated_sentence = []
@@ -58,6 +59,7 @@ def tagging_spacy(rand_sentences):
             row = [t.text, t.pos_]
             rows.append(row)
         df = pd.DataFrame(rows, columns=['Token', 'pos_tag'])
+        print('Tagging using SpaCy library:')
         print(df, '\n')
 
 
