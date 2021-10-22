@@ -27,13 +27,13 @@ In this assignment, we approached the Yelp review dataset through basic textual 
 
 ### Program Execution and Desired Outcome
 
-3.2 Dataset Analysis
+#### 3.2 Dataset Analysis
 * [Detailed steps]
 ```
 code blocks for commands [if any]
 ```
 
-3.3 Extraction of Adjective Phrases (AP)
+#### 3.3 Extraction of Adjective Phrases (AP)
 * Change directory accordingly so that the dataeset can be accessed:
 ```
 json_path = '../Dataset/reviewSelected100.json' 
