@@ -29,8 +29,8 @@ class IndicativeAdjPhrase():
     # ------ Extraction of b1 reviews from original dataset ------#
     def extract_b1_data(self):
         b1review = self.b1_data['text']
-        b1review.to_csv('b1review_AP.txt', header=None, sep='\t', index=False)
-        b1_file_temp = open('b1review_AP.txt', "r")
+        b1review.to_csv('b1review.txt', header=None, sep='\t', index=False)
+        b1_file_temp = open('b1review.txt', "r")
         self.b1_files.append(b1_file_temp.read())
 
     # ------ Sentence separation for b1 reviews ------#
