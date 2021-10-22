@@ -4,7 +4,6 @@ from nltk.stem.porter import PorterStemmer
 from nltk.tokenize import sent_tokenize, word_tokenize, RegexpTokenizer
 from nltk.corpus import stopwords
 from nltk.util import ngrams
-# nltk.download('punkt')
 import pandas as pd
 # import random
 import json
@@ -138,12 +137,13 @@ class IndicativeAdjPhrase():
 
 if __name__ == '__main__':
     json_path = '../Dataset/reviewSelected100.json'  # Modify accordingly if needed
-    """
-        In total, 121 unique (raw) APs are filtered from comparing b1_reviews and other_reviews. 
-        Please refer to the report for detailed analysis.
-    """
     IndicativeAdjPhrase_ = IndicativeAdjPhrase(json_path)
     IndicativeAdjPhrase_.extract_b1_data()
     IndicativeAdjPhrase_.sentence_sep()
     IndicativeAdjPhrase_.extract_b1_AP()
     IndicativeAdjPhrase_.indicative_b1_AP()
+    
+    """
+        In total, 121 unique (raw) APs are filtered from comparing b1_reviews and other_reviews. 
+        Please refer to the report for detailed analysis.
+    """
