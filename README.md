@@ -76,11 +76,7 @@ python application.py
 
 ## Authors
 Han Jun - HANJ0030@e.ntu.edu.sg  
-
 Joey Hiew Mun Yee - JOEY0028@e.ntu.edu.sg  
-
 Tao Weijing - D180002@e.ntu.edu.sg  
-
 Wang Yifan - D180003@e.ntu.edu.sg  
-
 Yang Yubei - C180052@e.ntu.edu.sg
