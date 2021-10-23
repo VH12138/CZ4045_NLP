@@ -28,7 +28,7 @@ In this assignment, we approached the Yelp review dataset through basic textual 
 ## Program Execution and Desired Outcome
 
 ### 3.2 Dataset Analysis
-* Change directory accordingly so that the dataeset can be accessed:
+Change directory accordingly so that the dataeset can be accessed:
 ```
 json_path = '../Dataset/reviewSelected100.json' 
 ``` 
@@ -38,10 +38,11 @@ python tokenization_stemming.py
 ```
 A result folder will be generated. 
 Four files will be stored inside the result folder.
-- b1review.txt: Extracted all reviews for random selected business b1
-- b2review.txt: Extracted all reviews for random selected business b2
-- b1_word_frequency.png: Word frequency for b1
-- b2_word_frequency.png: Word frequency for b2
+    - b1review.txt: Extracted all reviews for random selected business b1
+    - b2review.txt: Extracted all reviews for random selected business b2
+    - b1_word_frequency.png: Word frequency for b1
+    - b2_word_frequency.png: Word frequency for b2
+
 Do not remove any file from the result folder for the following steps, since the file will be used for further analysis.
 
 * POS Tagging: Run the following command under folder Task3.2
