@@ -75,8 +75,12 @@ python application.py
 * A result folder will be generated. The detected negation words will be stored in result folder in png form named negation_dis. 
 
 ## Authors
-Han Jun - HANJ0030@e.ntu.edu.sg
-Joey Hiew Mun Yee - JOEY0028@e.ntu.edu.sg
-Tao Weijing - D180002@e.ntu.edu.sg
-Wang Yifan - D180003@e.ntu.edu.sg
+Han Jun - HANJ0030@e.ntu.edu.sg  
+
+Joey Hiew Mun Yee - JOEY0028@e.ntu.edu.sg  
+
+Tao Weijing - D180002@e.ntu.edu.sg  
+
+Wang Yifan - D180003@e.ntu.edu.sg  
+
 Yang Yubei - C180052@e.ntu.edu.sg
