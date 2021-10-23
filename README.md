@@ -28,7 +28,7 @@ In this assignment, we approached the Yelp review dataset through basic textual 
 ## Program Execution and Desired Outcome
 
 ### 3.2 Dataset Analysis
-Change directory accordingly so that the dataeset can be accessed:
+* Change directory accordingly so that the dataeset can be accessed:
 ```
 json_path = '../Dataset/reviewSelected100.json' 
 ``` 
@@ -36,12 +36,12 @@ json_path = '../Dataset/reviewSelected100.json'
 ```
 python tokenization_stemming.py
 ```
-A result folder will be generated. 
-Four files will be stored inside the result folder.
-    - b1review.txt: Extracted all reviews for random selected business b1
-    - b2review.txt: Extracted all reviews for random selected business b2
-    - b1_word_frequency.png: Word frequency for b1
-    - b2_word_frequency.png: Word frequency for b2
+
+* A result folder will be generated. Four files will be stored inside the result folder:
+    * b1review.txt: Extracted all reviews for random selected business b1
+    * b2review.txt: Extracted all reviews for random selected business b2
+    * b1_word_frequency.png: Word frequency for b1
+    * b2_word_frequency.png: Word frequency for b2
 
 Do not remove any file from the result folder for the following steps, since the file will be used for further analysis.
 
@@ -49,7 +49,7 @@ Do not remove any file from the result folder for the following steps, since the
 ```
 python POS_tag.py
 ```
-Output of the two methods of POS Tagging will be shown in ternimal. 
+* Output of the two methods of POS Tagging will be shown in ternimal. 
 
 ### 3.3 Extraction of Adjective Phrases (AP)
 * Change directory accordingly so that the dataeset can be accessed:
@@ -66,7 +66,7 @@ json_path = '../Dataset/reviewSelected100.json'
 ```
 python application.py
 ```
-A result folder will be generated. The detected negation words will be stored in result folder in png form named negation_dis. 
+* A result folder will be generated. The detected negation words will be stored in result folder in png form named negation_dis. 
 
 ## Authors
 
