@@ -28,10 +28,27 @@ In this assignment, we approached the Yelp review dataset through basic textual 
 ## Program Execution and Desired Outcome
 
 ### 3.2 Dataset Analysis
-* [Detailed steps]
+* Change directory accordingly so that the dataeset can be accessed:
 ```
-code blocks for commands [if any]
+json_path = '../Dataset/reviewSelected100.json' 
+``` 
+* Tokenization and Stemming: Run the following command under folder Task3.2
 ```
+python tokenization_stemming.py
+```
+A result folder will be generated. 
+Four files will be stored inside the result folder.
+- b1review.txt: Extracted all reviews for random selected business b1
+- b2review.txt: Extracted all reviews for random selected business b2
+- b1_word_frequency.png: Word frequency for b1
+- b2_word_frequency.png: Word frequency for b2
+Do not remove any file from the result folder for the following steps, since the file will be used for further analysis.
+
+* POS Tagging: Run the following command under folder Task3.2
+```
+python POS_tag.py
+```
+Output of the two methods of POS Tagging will be shown in ternimal. 
 
 ### 3.3 Extraction of Adjective Phrases (AP)
 * Change directory accordingly so that the dataeset can be accessed:
@@ -42,6 +59,13 @@ json_path = '../Dataset/reviewSelected100.json'
 * Execute the Python script
     * The outcome, i.e. list of indicative APs (raw), is printed out
 * Refer to the report for detailed analysis on the indicative APs, as well as the criteria of filtering them
+
+### 3.4 Application
+* Application: Run the following command under folder Task3.4
+```
+python application.py
+```
+A result folder will be generated. The detected negation words will be stored in result folder in png form named negation_dis. 
 
 ## Authors
 

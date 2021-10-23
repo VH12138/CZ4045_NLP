@@ -1,47 +1,44 @@
-import nltk
-import random
-from nltk.tokenize import sent_tokenize, word_tokenize
-from nltk.corpus import stopwords
-from nltk.data import load
-import pandas as pd
-import spacy
-import spacy.cli
 import os
+import re
+import pandas as pd
+import matplotlib.pyplot as plt
 
-# Sentence Separation
-def sentence_sep(txt_files):
-    separated_sentence = []
-    for txt_file in txt_files:
-        # Tokenize the file into sentences
-        sentences = sent_tokenize(str(txt_file))
-        # Append sentence to the full dictionary
-        for sentence in sentences:
-            separated_sentence.append(sentence)
-    return separated_sentence
+from POS_tag import sentence_sep
 
-def findNegation(sentences):
-    nlp = spacy.load("en_core_web_lg")
-    for i in sentences:
-        print(i)
-        rows = []
-        text = word_tokenize(i)
-        doc = nlp(i)
-        negation_tokens = [tok for tok in doc if tok.dep_ == 'neg']
-        negation_head_tokens = [token.head for token in negation_tokens]
-        for token in negation_head_tokens:
-            # print(token.text, token.dep_, token.head.text, token.head.pos_, [child for child in token.children])
-            # row = [token.text, token.dep_, token.head.text, token.head.pos_, [child for child in token.children]]
-            row = [token.text, [child for child in token.children]]
-            rows.append(row)
-        df = pd.DataFrame(rows, columns =['Token', 'Negation Expression'])
-        print(df,'\n')
+def detect_negation(b1sentences_):
+    negation_words_dict = {}
+    for text in b1sentences_:
+        negation_word = re.findall(r'(not|\bnever\b|\bno\b|n\'t\W|\Wnon|\bnothing\b|\bnobody\b|\bnowhere\b|\bnope\b)',
+                                    text, re.IGNORECASE)
+        # if len(negation_word) != 0:
+        #     print(text)
+        for word in negation_word:
+            word = word.lower()
+            word = " ".join(re.split("[^a-zA-Z]*", word))
+            if word == " n  t  ":
+                word = "n\'t"
+            if word not in negation_words_dict:
+                print(word)
+                print(len(word))
+                negation_words_dict[word] = 1
+            else:
+                negation_words_dict[word] += 1
+    return negation_words_dict
 
 
 if __name__ == '__main__':
+    if not os.path.exists('result'):
+        os.makedirs('result')
     b1review = '../Task3.2/result/b1review.txt'
     file1 = open(b1review, 'r')
     files = list()
     files.append(file1.read())
-    # Get all sentences of b1
     b1sentences = sentence_sep(files)
-    findNegation(b1sentences)
+
+    negation_words_dict_ = detect_negation(b1sentences)
+
+    plt.bar(list(negation_words_dict_.keys()), negation_words_dict_.values(), color='#75acc1')
+    plt.savefig('result/negation_dis.png')
+    plt.show()
+
+
