@@ -16,14 +16,21 @@ This README file is best viewed using a text editor that supports Markdown.
 In this assignment, we approached the Yelp review dataset through basic textual processing and analysis techniques, including tokenisation, stemming, POS tagging and etc. We also conducted analysis on concepts such as noun-adjective pair and adjective phrases with sampled data.
 
 ## Getting Started
+This project runs with the Python 3.8.x interpreter. Add the path of your local python.exe installation to your system PATH variable. Please ensure you have the correct Python version and all dependent libraries (listed above) installed. Please note that do not remove any of the generated files from result folders since they will be used for further analysis.
 
 ### Dependencies
 
-* [To be edited]
+* nltk: http://www.nltk.org/
+* pandas: http://pandas.pydata.org
+* matploylib: https://matplotlib.org/
+* SpaCy: https://spacy.io/ 
 
 ### Installing
 
-* [To be edited]
+For installation of required libraries use command from terminal:
+```
+pip install <package_name>
+``` 
 
 ## Program Execution and Desired Outcome
 
@@ -43,7 +50,6 @@ python tokenization_stemming.py
     * b1_word_frequency.png: Word frequency for b1
     * b2_word_frequency.png: Word frequency for b2
 
-Do not remove any file from the result folder for the following steps, since the file will be used for further analysis.
 
 * POS Tagging: Run the following command under folder Task3.2
 ```
@@ -69,15 +75,8 @@ python application.py
 * A result folder will be generated. The detected negation words will be stored in result folder in png form named negation_dis. 
 
 ## Authors
-
-Contributors names and contact info
-[To be edited]
-
-## Version History
-
-* 0.1
-    * Initial Release
-
-## Acknowledgments
-
-* [Insert references]
+Han Jun - HANJ0030@e.ntu.edu.sg
+Joey Hiew Mun Yee - JOEY0028@e.ntu.edu.sg
+Tao Weijing - D180002@e.ntu.edu.sg
+Wang Yifan - D180003@e.ntu.edu.sg
+Yang Yubei - C180052@e.ntu.edu.sg
