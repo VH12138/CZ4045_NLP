@@ -28,8 +28,10 @@ class IndicativeAdjPhrase():
     # ------ Extraction of b1 reviews from original dataset ------#
     def extract_b1_data(self):
         b1review = self.b1_data['text']
-        b1review.to_csv('b1review.txt', header=None, sep='\t', index=False)
-        b1_file_temp = open('b1review.txt', "r")
+        #b1review.to_csv('b1review.txt', header=None, sep='\t', index=False)
+        b1review.to_csv('result/b1review.txt', header=None, sep='\t', index=False)
+        #b1_file_temp = open('b1review.txt', "r")
+        b1_file_temp = open('result/b1review.txt', "r")
         self.b1_files.append(b1_file_temp.read())
 
     # ------ Sentence separation for b1 reviews ------#
@@ -87,9 +89,11 @@ class IndicativeAdjPhrase():
         other_data = self.data.loc[self.data['business_id'] != 'oICXzFAaUMrYGzjRWmkw4Q']
         # other_data.head(n=3)  # Total: 15200 rows
         otherreview = other_data['text']
-        with open('otherreview.txt', 'w', encoding='utf-8') as f:
+        #with open('otherreview.txt', 'w', encoding='utf-8') as f:
+        with open('result/otherreview.txt', 'w', encoding='utf-8') as f:
             f.write(other_data['text'].str.cat(sep='\n'))
-        other_file_temp = open('otherreview.txt', "r")
+        #other_file_temp = open('otherreview.txt', "r")
+        other_file_temp = open('result/otherreview.txt', "r")
         other_files = list()
         other_files.append(other_file_temp.read())
         other_sentences = sentence_sep(other_files)
