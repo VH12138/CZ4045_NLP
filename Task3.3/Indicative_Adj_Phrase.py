@@ -140,6 +140,8 @@ class IndicativeAdjPhrase():
 
 
 if __name__ == '__main__':
+    if not os.path.exists('result'):
+        os.makedirs('result')
     json_path = '../Dataset/reviewSelected100.json'  # Modify accordingly if needed
     IndicativeAdjPhrase_ = IndicativeAdjPhrase(json_path)
     IndicativeAdjPhrase_.extract_b1_data()
