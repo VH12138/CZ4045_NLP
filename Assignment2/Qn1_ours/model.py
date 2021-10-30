@@ -174,11 +174,7 @@ class FNNModel(nn.Module):
         nn.init.uniform_(self.encoder.weight, -initrange, initrange)
         nn.init.zeros_(self.decoder.weight)
         nn.init.uniform_(self.decoder.weight, -initrange, initrange)
-
-    def init_hidden(self, bsz):
-        weight = next(self.parameters())
-        return weight.new_zeros(self.nlayers, bsz, self.nhid)
-    
+ 
 
     def forward(self, inputs):
         # x'  = e(x1) concat e(x2)
