@@ -11,7 +11,7 @@ import preprocessing
 import model
 
 parser = argparse.ArgumentParser(description='PyTorch Wikitext-2 FNN Language Model')
-parser.add_argument('--data', type=str, default='/4TB/jhan/cv/wikitext-2/',
+parser.add_argument('--data', type=str, default='/home/weijing/nlp/wikitext-2/',
                     help='location of the data corpus')
 parser.add_argument('--model', type=str, default='FFNModel',
                     help='type of recurrent net (RNN_TANH, RNN_RELU, LSTM, GRU, Transformer)')
@@ -35,8 +35,8 @@ parser.add_argument('--batch_size', type=int, default=20, metavar='N',
 parser.add_argument('--bptt', type=int, default=35,
                     help='sequence length')
 parser.add_argument('--dropout', type=float, default=0.2,
-                    help='dropout applied to layers (0 = no dropout)')
-parser.add_argument('--tied', action='store_true',
+                   help='dropout applied to layers (0 = no dropout)')
+parser.add_argument('--tied', action='store_true', default=False,
                     help='tie the word embedding and softmax weights')
 parser.add_argument('--seed', type=int, default=1111,
                     help='random seed')
@@ -49,8 +49,8 @@ parser.add_argument('--save', type=str, default='model.pt',
 parser.add_argument('--onnx-export', type=str, default='',
                     help='path to export the final model in onnx format')
 
-parser.add_argument('--nhead', type=int, default=2,
-                    help='the number of heads in the encoder/decoder of the transformer model')
+#parser.add_argument('--nhead', type=int, default=2,
+                   # help='the number of heads in the encoder/decoder of the transformer model')
 parser.add_argument('--dry-run', action='store_true',
                     help='verify the code and the model')
 
@@ -90,7 +90,7 @@ test_data = batchify(corpus.test, eval_batch_size)
 
 ntokens = len(corpus.dictionary) #33278
 
-model = model.FNNModel(ntokens, args.emsize, args.ngram, args.nhid, args.nlayers, args.dropout).to(device)
+model = model.FNNModel(ntokens, args.emsize, args.ngram, args.nhid, args.nlayers, args.dropout, args.tied).to(device)
 
 criterion = nn.NLLLoss()
 

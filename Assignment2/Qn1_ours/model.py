@@ -155,7 +155,7 @@ class TransformerModel(nn.Module):
 class FNNModel(nn.Module):
     """Implement based on Qn1."""
 
-    def __init__(self, ntoken, embedding_dim, ngram, nhid, nlayers, dropout=0.5):
+    def __init__(self, ntoken, embedding_dim, ngram, nhid, nlayers, dropout=0.2,tie_weights=False):
         super(FNNModel, self).__init__()
         self.ntoken = ntoken
         self.drop = nn.Dropout(dropout)
@@ -167,6 +167,10 @@ class FNNModel(nn.Module):
         self.encoder = nn.Embedding(ntoken, embedding_dim)
         self.fc = nn.Linear(ngram * embedding_dim, nhid)
         self.decoder = nn.Linear(nhid, ntoken, bias=False)
+        if tie_weights:
+            if nhid != embedding_dim:
+                raise ValueError('When using the tied flag, nhid must be equal to emsize')
+            self.decoder.weight = self.encoder.weight
         self.init_weights()
 
     def init_weights(self):
