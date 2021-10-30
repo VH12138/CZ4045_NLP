@@ -155,22 +155,39 @@ class TransformerModel(nn.Module):
 class FNNModel(nn.Module):
     """Implement based on Qn1."""
 
-    def __init__(self, ntoken, embedding_dim, ngram, nhid, dropout=0.5):
+    def __init__(self, ntoken, embedding_dim, ngram, nhid, nlayers, dropout=0.5):
         super(FNNModel, self).__init__()
         self.ntoken = ntoken
         self.drop = nn.Dropout(dropout)
         self.embedding_dim = embedding_dim
         self.ngram = ngram
-        self.embeddings = nn.Embedding(ntoken, embedding_dim)
-        self.linear1 = nn.Linear(ngram * embedding_dim, nhid)
-        self.linear2 = nn.Linear(nhid, ntoken, bias = False)
+        self.nhid = nhid
+        self.nlayers = nlayers
+
+        self.encoder = nn.Embedding(ntoken, embedding_dim)
+        self.fc = nn.Linear(ngram * embedding_dim, nhid)
+        self.decoder = nn.Linear(nhid, ntoken, bias=False)
+        self.init_weights()
+
+    def init_weights(self):
+        initrange = 0.1
+        nn.init.uniform_(self.encoder.weight, -initrange, initrange)
+        nn.init.zeros_(self.decoder.weight)
+        nn.init.uniform_(self.decoder.weight, -initrange, initrange)
+
+    def init_hidden(self, bsz):
+        weight = next(self.parameters())
+        return weight.new_zeros(self.nlayers, bsz, self.nhid)
+    
 
     def forward(self, inputs):
         # x'  = e(x1) concat e(x2)
-        embeds = self.embeddings(inputs).view((1, self.ngram * self.embedding_dim)) #(1 x 1600)
+        x1 = self.encoder(inputs).view((-1, self.ngram * self.embedding_dim))
+        # drop out
+        x3 = self.drop(x1)
         # h = tanh(W1 * x' + b)
-        x = torch.tanh(self.linear1(embeds))
-        # y = solftmax(W2 * h)
-        x = self.linear2(x)
-        x = F.log_softmax(x, dim=1)
-        return x
+        x4 = torch.tanh(self.fc(x3))
+         # y = solftmax(W2 * h)
+        x5 = self.decoder(x4)
+        x6 = F.log_softmax(x5, dim=1)        
+        return x6
