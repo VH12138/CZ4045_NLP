@@ -155,19 +155,28 @@ class TransformerModel(nn.Module):
 class FNNModel(nn.Module):
     """Implement based on Qn1."""
 
-    def __init__(self, ntoken, embedding_dim, ngram, nhid, nlayers, dropout=0.5):
+    def __init__(self, ntoken, embedding_dim,nhid, nlayers, dropout=0.5, tie_weights = False):
         super(FNNModel, self).__init__()
         self.ntoken = ntoken
         self.drop = nn.Dropout(dropout)
         self.embedding_dim = embedding_dim
-        self.ngram = ngram
+        # self.ngram = ngram
         self.nhid = nhid
         self.nlayers = nlayers
 
         self.encoder = nn.Embedding(ntoken, embedding_dim)
-        self.fc = nn.Linear(ngram * embedding_dim, nhid)
+        self.fc = nn.Linear( embedding_dim, nhid)
         self.decoder = nn.Linear(nhid, ntoken, bias=False)
+        
+        if tie_weights:
+            if nhid != embedding_dim:
+                raise ValueError('When using the tie flag, number of hidden units must be equal to embedding size.')
+            self.decoder.weight = self.encoder.weight
         self.init_weights()
+
+    def init_hidden(self, bsz):
+        weight = next(self.parameters())
+        return weight.new_zeros(self.nlayers, bsz, self.nhid)
 
     def init_weights(self):
         initrange = 0.1
@@ -176,14 +185,15 @@ class FNNModel(nn.Module):
         nn.init.uniform_(self.decoder.weight, -initrange, initrange)
  
 
-    def forward(self, inputs):
+    def forward(self, inputs, hidden):
         # x'  = e(x1) concat e(x2)
-        x1 = self.encoder(inputs).view((-1, self.ngram * self.embedding_dim))
+        encode = self.encoder(inputs) # .view((-1, self.ngram * self.embedding_dim))
         # drop out
-        x3 = self.drop(x1)
+        x = self.drop(encode)
         # h = tanh(W1 * x' + b)
-        x4 = torch.tanh(self.fc(x3))
+        x = torch.tanh(self.fc(x))
          # y = solftmax(W2 * h)
-        x5 = self.decoder(x4)
-        x6 = F.log_softmax(x5, dim=1)        
-        return x6
+        x = self.decoder(x)
+        x = x.view(-1, self.ntoken)
+        x = F.log_softmax(x, dim=1)        
+        return x, hidden

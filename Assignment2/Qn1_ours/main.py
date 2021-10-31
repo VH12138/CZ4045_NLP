@@ -16,12 +16,11 @@ parser.add_argument('--data', type=str, default='/4TB/jhan/cv/wikitext-2/',
 parser.add_argument('--model', type=str, default='FFNModel',
                     help='type of recurrent net (RNN_TANH, RNN_RELU, LSTM, GRU, Transformer)')
 parser.add_argument('--emsize', type=int, default=200,
-                    help='size of word embeddings')
-parser.add_argument('--ngram', type=int, default=8,
-                    help='n-gram language model')                    
-parser.add_argument('--nhid', type=int, default=50,
+                    help='size of word embeddings')                  
+parser.add_argument('--nhid', type=int, default=200,
                     help='number of hidden units per layer')
-
+parser.add_argument('--opt', type=str, default='SGD',
+                    help='optimizer type (SGD|Adam|RMSProp)')
 parser.add_argument('--nlayers', type=int, default=2,
                     help='number of layers')
 parser.add_argument('--lr', type=float, default=20,
@@ -79,7 +78,7 @@ def batchify(data, bsz):
     data = data.view(bsz, -1).t().contiguous()
     return data.to(device)
 
-eval_batch_size = 8
+eval_batch_size = 10
 train_data = batchify(corpus.train, args.batch_size)
 val_data = batchify(corpus.valid, eval_batch_size)
 test_data = batchify(corpus.test, eval_batch_size)
@@ -90,7 +89,7 @@ test_data = batchify(corpus.test, eval_batch_size)
 
 ntokens = len(corpus.dictionary) #33278
 
-model = model.FNNModel(ntokens, args.emsize, args.ngram, args.nhid, args.nlayers, args.dropout).to(device)
+model = model.FNNModel(ntokens, args.emsize, args.nhid, args.nlayers, args.dropout).to(device)
 
 criterion = nn.NLLLoss()
 
@@ -106,22 +105,23 @@ def repackage_hidden(h):
     else:
         return tuple(repackage_hidden(v) for v in h)
 
+
 def get_batch(source, i):
     seq_len = min(args.bptt, len(source) - 1 - i)
-    data = source[i:i+seq_len, 0:args.ngram]
-    target = source[i+1:i+1+seq_len, args.ngram-1:args.ngram]
-    target = target.narrow(1, 0, 1).contiguous().view(-1)
+    data = source[i:i+seq_len]
+    target = source[i+1:i+1+seq_len].view(-1)
     return data, target
-
 
 def evaluate(data_source):
     # Turn on evaluation mode which disables dropout.
     model.eval()
     total_loss = 0.
+    hidden = model.init_hidden(eval_batch_size)
     with torch.no_grad():
         for i in range(0, data_source.size(0) - 1, args.bptt):
             data, targets = get_batch(data_source, i)
-            output = model(data)
+            output, hidden = model(data, hidden)
+            hidden = repackage_hidden(hidden)
             total_loss += len(data) * criterion(output, targets).item()
     return total_loss / (len(data_source) - 1)
 
@@ -130,11 +130,24 @@ def train():
     # Turn on training mode which enables dropout.
     model.train()
     total_loss = 0.
-    optimizer = torch.optim.Adam(model.parameters(), lr = 2e-3)
     start_time = time.time()
+
+    # Add optimizer
+    if args.opt == 'RMSProp':
+        optimizer = torch.optim.RMSprop(model.parameters(), lr = 1e-3)
+    elif args.opt == 'Adam':
+        optimizer = torch.optim.Adam(model.parameters(), lr = 1e-3)
+    else:
+        optimizer = torch.optim.SGD(model.parameters(), lr = 1e-3, momentum = 0.9)
+
+    hidden = model.init_hidden(args.batch_size)
     for batch, i in enumerate(range(0, train_data.size(0) - 1, args.bptt)):
         data, targets = get_batch(train_data, i)
-        output = model(data)
+        model.zero_grad()
+
+        hidden = repackage_hidden(hidden)
+        output, hidden = model(data, hidden)
+
         loss = criterion(output, targets)
         loss.backward()
         optimizer.step()
