@@ -7,6 +7,7 @@
 
 import argparse
 import torch
+import os
 import preprocessing
 
 parser = argparse.ArgumentParser(description='PyTorch Wikitext-2 Language Model')
@@ -48,12 +49,16 @@ model.eval()
 corpus = preprocessing.Corpus(args.data)
 ntokens = len(corpus.dictionary)
 
-input = torch.randint(ntokens, (1, 8), dtype=torch.long).to(device)
+hidden = model.init_hidden(1)
+input = torch.randint(ntokens, (1, 1), dtype=torch.long).to(device)
+
+if not os.path.exists('./gen_text/'):
+    os.mkdir('./gen_text/')
 
 with open(args.outf, 'w') as outf:
     with torch.no_grad():  # no tracking history
         for i in range(args.words):           
-            output= model(input)
+            output, hidden = model(input, hidden)
             word_weights = output.squeeze().div(args.temperature).exp().cpu()
             word_idx = torch.multinomial(word_weights, 1)[0]
             input.fill_(word_idx)

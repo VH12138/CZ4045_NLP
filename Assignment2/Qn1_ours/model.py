@@ -160,7 +160,6 @@ class FNNModel(nn.Module):
         self.ntoken = ntoken
         self.drop = nn.Dropout(dropout)
         self.embedding_dim = embedding_dim
-        # self.ngram = ngram
         self.nhid = nhid
         self.nlayers = nlayers
 

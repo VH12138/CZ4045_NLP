@@ -68,6 +68,8 @@ device = torch.device("cuda" if args.cuda else "cpu")
 ###############################################################################
 # Load data
 ###############################################################################
+if not os.path.exists('./model/'):
+    os.mkdir('./model/')
 
 corpus = preprocessing.Corpus(args.data)
 
@@ -126,7 +128,6 @@ def evaluate(data_source):
             hidden = repackage_hidden(hidden)
             total_loss += len(data) * criterion(output, targets).item()
     return total_loss / (len(data_source) - 1)
-
 
 def train():
     # Turn on training mode which enables dropout.
