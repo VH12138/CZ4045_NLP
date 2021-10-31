@@ -81,28 +81,28 @@ json_path = '../Dataset/reviewSelected100.json'
 
 ## File Structure
 ```
-> |-Qn1                                                     #Source code for Qn1
->   |-gen_text                                              #Folder stores generated text from generate.py
->       |-text_RMSProp_ngram8_emsize200_nhid200.txt
->       |-text_RMSProp_ngram8_emsize200_nhid200.txt
->       |-text_RMSProp_ngram8_emsize200_nhid200.txt
->   |-model                                                 #Folder stores trained models from main.py
->       |-model_SGD_ngram8_emsize8_nhid200.pt
->       |-model_Adam_ngram8_emsize8_nhid200.pt
->       |-model_RMSProp_ngram8_emsize8_nhid200.pt
->       |-model_SGD_ngram8_emsize200_nhid200_tie.pt
->       |-model_Adam_ngram8_emsize200_nhid200_tie.pt
->       |-model_RMSProp_ngram8_emsize200_nhid200_tie.pt
->   |-generate.py                                           #Code to generate text from language models
->   |-main.py
->   |-model.py
->   |-preprocessing.py                                      #Code to load the raw datasets
-> |-Qn2
-> |-wikitext-2                                              #Dataset used for Qn1
->   |-test.txt
->   |-train.txt
->   |-valid.txt
-> |- README.md
+|-- Qn1                                                     #Source code for Qn1
+    |-- gen_text                                            #Folder stores generated text from generate.py
+        |-- text_RMSProp_ngram8_emsize200_nhid200.txt
+        |-- text_RMSProp_ngram8_emsize200_nhid200.txt
+        |-- text_RMSProp_ngram8_emsize200_nhid200.txt
+    |-- model                                               #Folder stores trained models from main.py
+        |-- model_SGD_ngram8_emsize8_nhid200.pt
+        |-- model_Adam_ngram8_emsize8_nhid200.pt
+        |-- model_RMSProp_ngram8_emsize8_nhid200.pt
+        |-- model_SGD_ngram8_emsize200_nhid200_tie.pt
+        |-- model_Adam_ngram8_emsize200_nhid200_tie.pt
+        |-- model_RMSProp_ngram8_emsize200_nhid200_tie.pt
+    |-- generate.py                                         #Code to generate text from language models
+    |-- main.py
+    |-- model.py
+    |-- preprocessing.py                                    #Code to load the raw datasets
+|-- Qn2
+|-- wikitext-2                                              #Dataset used for Qn1
+    |-- test.txt
+    |-- train.txt
+    |-- valid.txt
+|-- README.md
 ```
 
 ## Authors
