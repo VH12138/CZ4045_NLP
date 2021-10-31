@@ -12,7 +12,7 @@ import preprocessing
 parser = argparse.ArgumentParser(description='PyTorch Wikitext-2 Language Model')
 
 # Model parameters.
-parser.add_argument('--data', type=str, default='/home/weijing/nlp/wikitext-2',
+parser.add_argument('--data', type=str, default='/4TB/jhan/cv/wikitext-2',
                     help='location of the data corpus')
 parser.add_argument('--checkpoint', type=str, default='./model.pt',
                     help='model checkpoint to use')

@@ -155,7 +155,7 @@ class TransformerModel(nn.Module):
 class FNNModel(nn.Module):
     """Implement based on Qn1."""
 
-    def __init__(self, ntoken, embedding_dim,nhid, nlayers, dropout=0.5, tie_weights = False):
+    def __init__(self, ntoken, embedding_dim, nhid, nlayers, dropout=0.5, tie_weights = False):
         super(FNNModel, self).__init__()
         self.ntoken = ntoken
         self.drop = nn.Dropout(dropout)
@@ -165,7 +165,7 @@ class FNNModel(nn.Module):
         self.nlayers = nlayers
 
         self.encoder = nn.Embedding(ntoken, embedding_dim)
-        self.fc = nn.Linear( embedding_dim, nhid)
+        self.fc = nn.Linear(embedding_dim, nhid)
         self.decoder = nn.Linear(nhid, ntoken, bias=False)
         
         if tie_weights:
@@ -187,13 +187,12 @@ class FNNModel(nn.Module):
 
     def forward(self, inputs, hidden):
         # x'  = e(x1) concat e(x2)
-        encode = self.encoder(inputs) # .view((-1, self.ngram * self.embedding_dim))
+        encode = self.encoder(inputs)
         # drop out
         x = self.drop(encode)
         # h = tanh(W1 * x' + b)
         x = torch.tanh(self.fc(x))
          # y = solftmax(W2 * h)
-        x = self.decoder(x)
-        x = x.view(-1, self.ntoken)
+        x = self.decoder(x).view(-1, self.ntoken)
         x = F.log_softmax(x, dim=1)        
         return x, hidden
