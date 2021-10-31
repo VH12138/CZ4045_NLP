@@ -11,10 +11,10 @@ import preprocessing
 import model
 
 parser = argparse.ArgumentParser(description='PyTorch Wikitext-2 FNN Language Model')
-parser.add_argument('--data', type=str, default='/4TB/jhan/cv/wikitext-2/',
+parser.add_argument('--data', type=str, default='./wikitext-2',
                     help='location of the data corpus')
 parser.add_argument('--model', type=str, default='FFNModel',
-                    help='type of recurrent net (RNN_TANH, RNN_RELU, LSTM, GRU, Transformer)')
+                    help='type of neural network (Only FNN model is provided)')
 parser.add_argument('--emsize', type=int, default=200,
                     help='size of word embeddings')                  
 parser.add_argument('--nhid', type=int, default=200,
@@ -22,7 +22,7 @@ parser.add_argument('--nhid', type=int, default=200,
 parser.add_argument('--ngram', type=int, default=8,
                     help='n-gram model')                    
 parser.add_argument('--opt', type=str, default='SGD',
-                    help='optimizer type (SGD|Adam|RMSProp)')
+                    help='optimizer type (SGD, Adam, RMSProp)')
 parser.add_argument('--nlayers', type=int, default=2,
                     help='number of layers')
 parser.add_argument('--lr', type=float, default=20,

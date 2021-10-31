@@ -13,11 +13,11 @@ import preprocessing
 parser = argparse.ArgumentParser(description='PyTorch Wikitext-2 Language Model')
 
 # Model parameters.
-parser.add_argument('--data', type=str, default='/4TB/jhan/cv/wikitext-2',
+parser.add_argument('--data', type=str, default='./wikitext-2',
                     help='location of the data corpus')
-parser.add_argument('--checkpoint', type=str, default='./model.pt',
+parser.add_argument('--checkpoint', type=str, default='./model/model.pt',
                     help='model checkpoint to use')
-parser.add_argument('--outf', type=str, default='generated.txt',
+parser.add_argument('--outf', type=str, default='./gen_text/generated.txt',
                     help='output file for generated text')
 parser.add_argument('--words', type=int, default='1000',
                     help='number of words to generate')

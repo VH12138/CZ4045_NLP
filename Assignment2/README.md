@@ -21,12 +21,7 @@ This project runs with the Python 3.8.x interpreter with Pytorch 1.6.0. Add the 
 ## Program Execution and Desired Outcome
 
 ### Question 1
-Make a new folder name `wikitext-2` under the root directory. 
-Put the files `train.txt`, `valid.txt` and `test.txt` under this `wikitext-2` directory.
-```
-sudo mkdir wikitext-2
-``` 
-To train the model, run `main.py` file with arguments. Pass in your path as an argument when you run these files. The following command is an example:
+To train the model, run `main.py` file with arguments. The dataset `wikitext-2` has been provided in the folder, simply use the default argument of `--data`. Alternatively, you may use the argument `--data /your path/` to read in your own wikitext-2 dataset. The following command is an example:
 ```
 python main.py --data /your path/ --opt SGD --emsize 8 --save ./model/model_SGD_ngram8_emsize8_nhid200.pt
 ```
@@ -38,10 +33,10 @@ The `main.py` script accepts the following arguments:
 optional arguments:
   -h, --help            show this help message and exit
   --data DATA           location of the data corpus
-  --model MODEL         type of recurrent net (RNN_TANH, RNN_RELU, LSTM, GRU,
-                        Transformer)
+  --model MODEL         type of neural network (Only FNN model is provided)
   --emsize EMSIZE       size of word embeddings
   --nhid NHID           number of hidden units per layer
+  --opt OPT             optimizer type (SGD, Adam, RMSProp)
   --nlayers NLAYERS     number of layers
   --lr LR               initial learning rate
   --clip CLIP           gradient clipping
@@ -93,15 +88,15 @@ json_path = '../Dataset/reviewSelected100.json'
         |-- model_SGD_ngram8_emsize200_nhid200_tie.pt
         |-- model_Adam_ngram8_emsize200_nhid200_tie.pt
         |-- model_RMSProp_ngram8_emsize200_nhid200_tie.pt
+    |-- wikitext-2                                          #Dataset used for Qn1
+        |-- test.txt
+        |-- train.txt
+        |-- valid.txt
     |-- generate.py                                         #Code to generate text from language models
     |-- main.py
     |-- model.py
     |-- preprocessing.py                                    #Code to load the raw datasets
 |-- Qn2
-|-- wikitext-2                                              #Dataset used for Qn1
-    |-- test.txt
-    |-- train.txt
-    |-- valid.txt
 |-- README.md
 ```
 
