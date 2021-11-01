@@ -31,6 +31,11 @@ To train the model, run `main.py` file with arguments. The dataset `wikitext-2` 
 python main.py --data /your path/ --opt SGD --emsize 8 --save ./model/model_SGD_ngram8_emsize8_nhid200.pt
 ```
 
+To run a model with sharing the input, indicate `--tied` in the argument. The following command is an example:
+```
+python main.py --data /your path/ --opt SGD --emsize 8 --save ./model/model_SGD_ngram8_emsize8_nhid200.pt --tied
+```
+
 During training, if a keyboard interrupt (Ctrl-C) is received, training is stopped and the current model is evaluated against the test dataset.
 
 The `main.py` script accepts the following arguments:
