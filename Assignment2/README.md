@@ -79,6 +79,31 @@ Change your root direction to `Qn2` for the following operations.
 cd Qn2
 ```
 
+#### Setup
+
+##### Creating new Conda environment
+`conda create -n pytorch python=3.5`
+
+##### Activate the condo environment
+`source activate pytorch`
+
+##### Setting up notebooks with specific python version (python 3.5)
+```
+conda install notebook ipykernel
+ipython kernel install --user
+```
+
+#### NumPy installation
+`conda install -c anaconda numpy`
+
+#### Data Files
+Note that the dataset used in this question has been provided under the folder `data`. Directly execute the ipynb file is acceptable. Alternatively, you may change the following parameters manually to read in your own dataset.
+```
+parameters['train'] = "./your path/"                        #Path to train file
+parameters['dev'] = "./your path/"                          #Path to test file
+parameters['test'] = "./your path/"                         #Path to dev file
+```
+
 
 
 ## File Structure
@@ -104,6 +129,16 @@ cd Qn2
     |-- model.py
     |-- preprocessing.py                                    #Code to load the raw datasets
 |-- Qn2
+    |-- data                                                #Dataset used for Qn2
+        |-- eng.testa
+        |-- eng.testb
+        |-- eng.train
+        |-- eng.train54019
+        |-- glove.6B.100d.txt                               #Stanford's GloVe 100d word embeddings
+        |-- mapping.pkl                                     #Mapping file
+    |-- evaluation                                          #Folder storing the evaluation of a model
+    |-- models                                              #Folder storing pre-trained model and self trained model
+    |-- NER.ipynb                                           #Main file for Qn2
 |-- README.md
 ```
 
