@@ -85,7 +85,7 @@ cd Qn2
 ##### Creating new Conda environment
 `conda create -n pytorch python=3.5`
 
-##### Activate the condo environment
+##### Activate the Conda environment
 `source activate pytorch`
 
 ##### Setting up notebooks with specific python version (python 3.5)
