@@ -13,7 +13,7 @@ This README file is best viewed using a text editor that supports Markdown.
 
 ## Description
 
-In this assignment, 
+In this assignment, we will document our work on Question 1 and Question 2 of Assignment 2 in this repository.
 
 ## Getting Started
 This project runs with the Python 3.8.x interpreter with Pytorch 1.6.0. Add the path of your local python.exe installation to your system PATH variable. Please ensure you have the correct Python version and Pytorch installed. Please note that do not remove any of the generated files from result folders since they will be used for further analysis.
